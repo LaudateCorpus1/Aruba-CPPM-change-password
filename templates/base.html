@@ -1,0 +1,54 @@
+<html>
+  <head>
+    {% if title %}
+    <title>AAA {{title}}</title>
+    {% else %}
+    <title>AAA Change password</title>
+    {% endif %}
+    <style type="text/css">
+   #layer1 {
+   	background-color:#2FB75A;
+    padding: 20px 20px 20px 20px;
+    font-family: Arial;
+    color: #ffffff;
+   }
+   #butn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  background: #2FB75A;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+#main_txt {
+  font-family: Arial;
+  color: #2FB75A;
+}
+
+    </style>
+  </head>
+  <body>
+    {% if title == 'Logged_in' or title == 'Change Password' %}
+    <div style="overflow: hidden;"id="layer1">
+      <div style="width: 100%;">
+        <div style="float: left; width: auto;">User {{username}} is logged in</div>
+        <div style="float: right; width: 60px;"><a href="/logout"> Log out  </a></div>
+        <div style="float: right; width: 60px;"><a href="/">  Home </a></div>
+      </div>
+    </div>
+    {% else %}
+    <div style="overflow: hidden;"id="layer1">
+      <div style="width: 100%;">
+        <div style="float: left; width: auto;">User is not logged in</div>
+        <div style="float: right; width: 60px;"><a href="/login"> Log in  </a></div>
+        <div style="float: right; width: 60px;"><a href="/">  Home </a></div>
+      </div>
+    </div>
+    {% endif %}
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>

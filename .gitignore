@@ -1,0 +1,7 @@
+.idea/.name
+.ipynb_checkpoints/
+__pycache__/aaa_change_password.cpython-37.pyc
+config/params_2.cfg
+config/params_1.cfg
+pytest.ini
+.pytest_cache/
