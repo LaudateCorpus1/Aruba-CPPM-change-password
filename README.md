@@ -10,7 +10,7 @@
 
 ## General info
 Python Flask application which permits Aruba Clearpass local DB users to change their passwords through API calls
-to CPPM without Clearpass administrator intervention
+without Clearpass administrator intervention
 	
 ## Setup
 1. Install python and app's required dependencies.
@@ -116,6 +116,8 @@ Start application from project dir
 ```
 python3 aaa_change_password.py 
 ```
+Please use gunicorn + nginx to avoid security issues with HTTP
+
 Connect to app by http//application_server_IP_address:5000
 (if you are not using WSGI scheme)
 ![Start page](./images/start.jpg)
@@ -128,7 +130,7 @@ Change password page
 Success in changing password redirects to Logged_in page
 
 ##License
-Apache 2.0
+MIT
 
 ## Other information
 Author: Andrey Semenov andrey.semenov@hpe.com
