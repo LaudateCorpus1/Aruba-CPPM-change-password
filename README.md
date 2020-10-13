@@ -63,17 +63,20 @@ days_to_passw_exp = 40
 ![Role](./images/role.jpg)
 
 ## Tests
-Project directory contains integration tests (./tests dir):
+Project directory contains integration tests (./tests/test_aaa.py):
 1. Check file parameters
 2. Ping CPPM
 3. Test CPPM API connection
 4. Test Postgress DB connection
 5. Test password expiration for particular user (additional local user 'test_pass_expiry' required) 
 
+Also test directory includes regression tests for developer (test_regression.py)
+For this test the application must be started and user test123 must be existed.
+
 ### Testing
 Run tests from project dir:
 ```
-pytest -v
+pytest -v test_aaa.py
 ```
 Example of successful test results:
 ```
@@ -108,7 +111,6 @@ tests/test_aaa.py::test_clearpass_api_connection
 -- Docs: https://docs.pytest.org/en/latest/warnings.html
 =================================================== 15 passed, 1 warning in 8.85s ====================================================semenoc
 ```
-
 
 ## Usage
 

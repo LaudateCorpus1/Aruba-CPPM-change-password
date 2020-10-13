@@ -5,3 +5,5 @@ config/params_2.cfg
 config/params_1.cfg
 pytest.ini
 .pytest_cache/
+/geckodriver.log
+

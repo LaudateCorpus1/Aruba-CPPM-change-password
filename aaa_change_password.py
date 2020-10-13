@@ -14,10 +14,10 @@ from flask import Flask, session, redirect, url_for, request, render_template
 
 # Import class Сppm_Сonnect from file (classes.py)
 from classes import Cppm_Connect
-from common_functions import change_password
 # Import universal functions from file (common_functions.py)
 from common_functions import get_access_token
 from common_functions import pg_sql
+from common_functions import change_password
 
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -104,7 +104,8 @@ def login():
             return redirect(url_for('logged_in'))
         # Rewrite /login page with password warning
         login_message = 'User or password are incorrect'
-        return render_template('login.html', login_message=login_message)
+        return render_template('login.html', login_message=login_message,
+                               title='Log in')
 
     #   Start /login page
     login_message = 'Please enter your your username and password'
