@@ -1,9 +1,13 @@
 .idea/.name
 .ipynb_checkpoints/
-__pycache__/aaa_change_password.cpython-37.pyc
+__pycache__/
 config/params_2.cfg
 config/params_1.cfg
 pytest.ini
 .pytest_cache/
-/geckodriver.log
-
+geckodriver.log
+.idea/
+.vscode/
+tests/__pycache__/
+tests/test_flask.py
+tests/conftest.py

@@ -18,7 +18,7 @@ from classes import Cppm_Connect
 from common_functions import get_access_token
 from common_functions import pg_sql
 from common_functions import change_password
-
+from common_functions import check_user_status
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # main configuration parameters from files through class
@@ -193,22 +193,28 @@ def logout():
 def logged_in():
     """
     Logged_in page function based on template (templates/logged_in.html)
-    Shows days to password expiration for particular user
+    shows a number of days to password expiration for particular local user 
+    or points that user is system administrator. 
      Returns:
          Redirect to change password page in case of Change password flag
          Logged_in page with password expiration message
     """
-    exp_days, change_pwd_next_login = exp_days_f(cppm_connect_main,
+    if check_user_status(cppm_connect_main,session['username']) == 200:
+        cppm_connect_main.user_type = 'Admin'
+    if  cppm_connect_main.user_type != 'Admin':
+        exp_days, change_pwd_next_login = exp_days_f(cppm_connect_main,
                                                  session['username'])
-    if change_pwd_next_login:
-        return redirect(url_for('change_password_page'))
-    if exp_days <= 0:
-        exp_message = 'Your password is already expired according to internal policy'
-    elif session.get('patch_user_code') == 200:
-        exp_message = f'Password changed successfully. It expires in {exp_days} days'
-        session.pop('patch_user_code', None)
+        if change_pwd_next_login:
+            return redirect(url_for('change_password_page'))
+        if exp_days <= 0:
+            exp_message = 'Your password is already expired according to internal policy'
+        elif session.get('patch_user_code') == 200:
+            exp_message = f'Password changed successfully. It expires in {exp_days} days'
+            session.pop('patch_user_code', None)
+        else:
+            exp_message = f'Your password expires in {exp_days} days'
     else:
-        exp_message = f'Your password expires in {exp_days} days'
+            exp_message = 'You are logged in by administrator account'
     return render_template('logged_in.html', username=session['username'],
                            status_code=cppm_connect_main.status_code,
                            title='Logged_in', exp_message=exp_message)

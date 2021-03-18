@@ -1,4 +1,4 @@
-# Web selfservice app for changing local DB password for Aruba Clearpass
+ # Web selfservice app for changing admin and local DB password for Aruba Clearpass
 ## Table of contents
 * [General info](#general-info)
 * [Setup](#setup)
@@ -76,14 +76,14 @@ For this test the application must be started and user test123 must be existed.
 ### Testing
 Run tests from project dir:
 ```
-pytest -v test_aaa.py
+pytest -v tests/test_aaa.py
 ```
 Example of successful test results:
 ```
 ======================================================== test session starts =========================================================
 platform darwin -- Python 3.7.1, pytest-5.3.4, py-1.7.0, pluggy-0.13.1 -- /anaconda3/bin/python
 cachedir: .pytest_cache
-rootdir: /Users/semenov-ay/Downloads/aaa-sber/CPPM-change-password, inifile: pytest.ini
+rootdir: /Users/.../CPPM-change-password, inifile: pytest.ini
 plugins: doctestplus-0.2.0, arraydiff-0.3, remotedata-0.3.1, allure-pytest-2.8.7, openfiles-0.3.1
 collected 15 items                                                                                                                   
 
@@ -127,11 +127,13 @@ Login to App by your CPPM local username
 ![Algorithm schema](./images/login.jpg)
 Logged_in page which shows expiration message (May differ from screenshot)
 ![Algorithm schema](./images/logged_in.jpg)
+Logged_in page for administrative account (May differ from screenshot)
+![Algorithm schema](./images/logged_in_admin.jpg)
 Change password page
 ![Change password window](./images/change_password.jpg)
 Success in changing password redirects to Logged_in page
 
-##License
+## License
 MIT
 
 ## Other information

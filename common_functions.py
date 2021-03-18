@@ -70,7 +70,7 @@ def change_password(cppm_class, username, newpassword):
 
     Args:
         cppm_class: cppm_connect class from classes.py
-        username: Localuser DB username
+        username: Logged username
         newpassword: new password
 
     Returns:
@@ -102,7 +102,10 @@ def change_password(cppm_class, username, newpassword):
                                                        get_access_type)
         access_token = token_response['access_token']
         token_type = token_response['token_type']
-        url = f'https://{cppm_class.clearpass_fqdn}/api/local-user/user-id/{username}'
+        if  cppm_class.user_type != 'Admin':
+            url = f'https://{cppm_class.clearpass_fqdn}/api/local-user/user-id/{username}'
+        else:
+            url = f'https://{cppm_class.clearpass_fqdn}/api/admin-user/user-id/{username}'
         headers = {'Accept': 'application/json',
                    "Authorization": f"{token_type} {access_token}"}
         payload = {'password': newpassword}
@@ -165,3 +168,47 @@ def pg_sql(pg_select, cppm_class, username):
     cur.close()
     conn.close()
     return data
+
+
+def check_user_status(cppm_class, username):
+    """
+    Check user status (admin or not) function through API (uses get_access_token function)
+
+    Args:
+        cppm_class: cppm_connect class from classes.py
+        username:  Username logged in
+
+    Returns:
+        check_status_code: Status code for the Request call
+
+        HTTP Status Code 	Reason
+                200 	           OK
+                401 	           Unauthorized
+                403 	           Forbidden
+                404 	           Not Found
+                406 	           Not Acceptable
+                415 	           Unsupported Media Type
+    """
+    oauth_username = None
+    oauth_password = None
+    get_access_type = "check_user_status"
+    # Get Bearer and Access Token for check
+    try:
+        token_response, status_code = get_access_token(cppm_class,
+                                                       oauth_username,
+                                                       oauth_password,
+                                                       get_access_type)
+        access_token = token_response['access_token']
+        token_type = token_response['token_type']
+    # Check if user exists in the Admin DB   
+        url = f'https://{cppm_class.clearpass_fqdn}/api/admin-user/user-id/{username}'
+        headers = {'Accept': 'application/json',
+                   "Authorization": f"{token_type} {access_token}"}
+        payload = {}
+        check_user = requests.get(url, headers=headers, json=payload,
+                                    verify=False, timeout=4)
+        check_status_code = check_user.status_code
+        # print ('STATUS CODE',check_status_code)
+        return check_status_code
+    except Exception as check_user_exception:
+        print('CP Exception', check_user_exception)
